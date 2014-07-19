@@ -1,4 +1,4 @@
-= Dateslices
+# Dateslices
 
 This project rocks and uses MIT-LICENSE.
 
@@ -16,13 +16,13 @@ The differences between the groupdate and dateslices are:
 The reason that I wrote this is that I use sqlite in development, and wanted to make sure that I could test things locally.  I didn't understand the test suite of groupdate, so I ended up rewriting it.
 
 
-== Example Usage
+## Example Usage
 
 ```
 User.where( :created_at > 1.month.ago ).group_by_day
 ```
 
-== All find methods
+## All find methods
 
 - group_by_second
 - group_by_minute
@@ -33,6 +33,6 @@ User.where( :created_at > 1.month.ago ).group_by_day
 - group_by_month
 - group_by_year
 
-== Tests
+## Tests
 
 Rspec tests need to be run out of the spec/dummy directory, and you'll need to have a postgres and a mysql database named "dateslice_test" for them to success.
