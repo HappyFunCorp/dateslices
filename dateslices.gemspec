@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.description = 'A Rails 4 ActiveRecord plugin that adds group_by_day, group_by_month, etc. Not timezone aware, but supports sqlite.'
   s.license     = 'MIT'
 
-  s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.rdoc']
+  s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
   s.add_dependency 'rails', '~> 4.0'
 
