@@ -1,7 +1,5 @@
-require "active_support/core_ext/module/attribute_accessors"
-require "active_support/time"
-# require "groupdate/version"
-# require "dateslices/magic"
+require 'active_support/core_ext/module/attribute_accessors'
+require 'active_support/time'
 
 module Dateslices
   FIELDS = [:second, :minute, :hour, :day, :week, :day_of_week, :month, :year ]
@@ -12,14 +10,15 @@ module Dateslices
   self.day_start = 0
 end
 
-# require "groupdate/enumerable"
-
 begin
-  require "active_record"
+  require 'active_record'
 rescue LoadError
   # do nothing
 end
 
+require 'dateslices/sqlite'
+require 'dateslices/postgresql'
+require 'dateslices/mysql'
 require 'dateslices/scopes'
 
 ActiveRecord::Base.send(:extend, Dateslices::Scopes)
