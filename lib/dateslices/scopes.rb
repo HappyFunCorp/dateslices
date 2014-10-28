@@ -17,7 +17,7 @@ module Dateslices
           time_filter = Dateslices::Sqlite.time_filter(column, field)
         when 'PostgreSQL', 'PostGIS'
           time_filter = Dateslices::Postgresql.time_filter(column, field)
-        when 'MySQL'
+        when 'MySQL', 'Mysql2'
           time_filter = Dateslices::Mysql.time_filter(column, field)
         else
           throw "Unknown database adaptor #{connection.adapter_name}"
