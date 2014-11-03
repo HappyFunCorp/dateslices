@@ -25,7 +25,7 @@ module Dateslices
 
         sql << "#{time_filter} as date_slice"
 
-        select( sql.join(', ')).group('date_slice').order('date_slice').collect do |c|
+        select( sql.join(', ')).where.not(column => nil).group('date_slice').order('date_slice').collect do |c|
           slice = c['date_slice']
           slice = slice.to_i.to_s if slice.is_a? Float
           slice = slice.to_s if slice.is_a? Integer
