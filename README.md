@@ -5,9 +5,10 @@ This project rocks and uses MIT-LICENSE.
 This project is based upon [groupdate](https://github.com/ankane/groupdate) and follows a similar API.
 
 The differences between the groupdate and dateslices are:
+- dateslices supports sqlite3.
+- dateslices output id formatted differently (so not compatible with Chartkick).
 - dateslices has much less functionality.
-- dateslices supports sqlite3
-- dateslices ignores timezones
+- dateslices ignores timezones.
 - dateslices is rails 4 only.
 - dateslices uses rspecs for tests.
 - dateslices doesn't have hour_of_day since I don't deal with timezones
