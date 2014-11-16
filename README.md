@@ -32,7 +32,7 @@ User.group_by_day( :created_at, "sum", "karma" )
 ## Averaging a column
 
 ```
-Post.group_by_week( :updated_at, "average", "comment_count")
+Post.group_by_week( :updated_at, "avg", "comment_count")
 ```
 
 ## All find methods
