@@ -23,7 +23,25 @@ The reason that I wrote this is that I use sqlite in development, and wanted to 
 User.where( :created_at > 1.month.ago ).group_by_day
 ```
 
+## Summing up a column
+
+```
+User.group_by_day( :created_at, "sum", "karma" )
+```
+
+## Averaging a column
+
+```
+Post.group_by_week( :updated_at, "average", "comment_count")
+```
+
 ## All find methods
+
+These methods take three optional arguments:
+
+1. column to group by, normally "created_at"
+2. sql function to run, normally "count".  Also "sum", "avg"
+3. column to do the function on, normally "*"
 
 - group_by_second
 - group_by_minute
