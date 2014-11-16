@@ -8,7 +8,13 @@ module Dateslices
         column = args[0]
         column = 'created_at' if column.blank?
 
-        sql = ['count(*) as cnt']
+        aggregation = args[1]
+        aggregation = 'count' if aggregation.blank?
+
+        aggregation_column = args[2]
+        aggregation_column = "*" if aggregation_column.blank?
+
+        sql = ["#{aggregation}(#{aggregation_column}) as cnt"]
 
         time_filter = ''
 
@@ -29,7 +35,8 @@ module Dateslices
           slice = c['date_slice']
           slice = slice.to_i.to_s if slice.is_a? Float
           slice = slice.to_s if slice.is_a? Integer
-          { date_slice: slice, count: c["cnt"] }
+          slice = slice.to_s
+          { date_slice: slice, aggregation.to_sym => c["cnt"] }
         end
       end
     end

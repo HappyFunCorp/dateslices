@@ -235,6 +235,57 @@ RSpec.shared_examples "dateslice" do |config|
       {:date_slice=>"2014-07-19 18:00:00 UTC", :count=>3},
       {:date_slice=>"2014-07-19 19:00:00 UTC", :count=>2}])
   end
+
+  context "aggregations" do
+    it "should be able to count" do
+      expect( User.count ).to eq(0)
+
+      @t = Time.parse "2014-07-19 15:26:48 -0400"
+
+      10.times do |t|
+        User.create created_at: @t - (21.minutes * t), score: t
+      end
+
+      expect( User.group_by_hour( "created_at", "count") ).to eq([
+      {:date_slice=>"2014-07-19 16:00:00 UTC", :count=>3},
+      {:date_slice=>"2014-07-19 17:00:00 UTC", :count=>2},
+      {:date_slice=>"2014-07-19 18:00:00 UTC", :count=>3},
+      {:date_slice=>"2014-07-19 19:00:00 UTC", :count=>2}])
+    end
+
+    it "should be able to sum" do
+      expect( User.count ).to eq(0)
+
+      @t = Time.parse "2014-07-19 15:26:48 -0400"
+
+      10.times do |t|
+        User.create created_at: @t - (21.minutes * t), score: t
+      end
+
+      expect( User.group_by_hour( "created_at", "sum", "score") ).to eq([
+        {:date_slice=>"2014-07-19 16:00:00 UTC", :sum=>24},
+        {:date_slice=>"2014-07-19 17:00:00 UTC", :sum=>11},
+        {:date_slice=>"2014-07-19 18:00:00 UTC", :sum=>9},
+        {:date_slice=>"2014-07-19 19:00:00 UTC", :sum=>1}])
+    end
+
+    it "should be able to avergage" do
+      expect( User.count ).to eq(0)
+
+      @t = Time.parse "2014-07-19 15:26:48 -0400"
+
+      10.times do |t|
+        User.create created_at: @t - (21.minutes * t), score: t
+      end
+
+      expect( User.group_by_hour( "created_at", "avg", "score") ).to eq(
+        [ {:date_slice=>"2014-07-19 16:00:00 UTC", :avg=>8.0},
+          {:date_slice=>"2014-07-19 17:00:00 UTC", :avg=>5.5},
+          {:date_slice=>"2014-07-19 18:00:00 UTC", :avg=>3.0},
+          {:date_slice=>"2014-07-19 19:00:00 UTC", :avg=>0.5}]
+       )
+    end
+  end
 end
 
 
