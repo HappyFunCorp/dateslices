@@ -221,6 +221,20 @@ RSpec.shared_examples "dateslice" do |config|
       {:date_slice=>"2014-07-19 18:00:00 UTC", :count=>3},
       {:date_slice=>"2014-07-19 19:00:00 UTC", :count=>2}])
   end
+
+  it "should be able to limit the range" do
+    expect( User.count ).to eq(0)
+
+    @t = Time.parse "2014-07-19 15:26:48 -0400"
+
+    10.times do |t|
+      User.create created_at: @t - (21.minutes * t)
+    end
+
+    expect( User.where( "created_at > ?", "2014-07-19 17:59:00 UTC").group_by_hour ).to eq([
+      {:date_slice=>"2014-07-19 18:00:00 UTC", :count=>3},
+      {:date_slice=>"2014-07-19 19:00:00 UTC", :count=>2}])
+  end
 end
 
 
