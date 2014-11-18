@@ -6,12 +6,11 @@ This project is based upon [groupdate](https://github.com/ankane/groupdate) and 
 
 The differences between the groupdate and dateslices are:
 - dateslices supports sqlite3.
-- dateslices output id formatted differently (so not compatible with Chartkick).
 - dateslices has much less functionality.
 - dateslices ignores timezones.
 - dateslices is rails 4 only.
 - dateslices uses rspecs for tests.
-- dateslices doesn't have hour_of_day since I don't deal with timezones
+- dateslices doesn't have hour_of_day since it doesn't deal with timezones
 
 
 The reason that I wrote this is that I use sqlite in development, and wanted to make sure that I could test things locally.  I didn't understand the test suite of groupdate, so I ended up rewriting it.
@@ -51,6 +50,11 @@ These methods take three optional arguments:
 - group_by_day_of_week
 - group_by_month
 - group_by_year
+
+## Configuration
+
+The output format now defaults to a Chartkick compatible hash of dates and values.
+If you wish to use the dateslice format, please add `Dateslices.output_format = :dateslice` to an initializer.
 
 ## Tests
 
