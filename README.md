@@ -58,4 +58,4 @@ If you wish to use the dateslice format, please add `Dateslices.output_format = 
 
 ## Tests
 
-Rspec tests need to be run out of the spec/dummy directory, and you'll need to have a postgres and a mysql database named "dateslice_test" for them to success.
+Rspec tests need to be run out of the spec/dummy directory, and you'll need to have a postgres and a mysql database named "dateslice_test" for them to succeed.
