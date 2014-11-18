@@ -2,9 +2,7 @@ module Dateslices
   module Scopes
 
     Dateslices::FIELDS.each do |field|
-      puts "defining method #{field}"
       define_method :"group_by_#{field}" do |*args|
-        args = args.dup
         column = args[0].blank? ? 'created_at' : args[0]
 
         time_filter = case connection.adapter_name
@@ -19,13 +17,15 @@ module Dateslices
                         end
 
         sql = "count(*) as count, #{time_filter} as date_slice"
+        slices = select(sql).where.not(column => nil).group('date_slice').order('date_slice')
 
-        x = select(sql).group('date_slice').order('date_slice').collect do |c|
+        slices.collect! do |c|
           slice = c['date_slice']
           slice = slice.is_a?(Float) ? slice.to_i.to_s : slice.to_s
           [slice, c['count']]
         end
-        Hash[*x.flatten]
+
+        Hash[slices]
       end
     end
 
