@@ -4,6 +4,10 @@ require 'active_support/time'
 module Dateslices
   FIELDS = [:second, :minute, :hour, :day, :week, :day_of_week, :month, :year ]
   METHODS = FIELDS.map{|v| :"group_by_#{v}" }
+
+  mattr_accessor :output_format
+
+  self.output_format = :groupdate
 end
 
 begin
