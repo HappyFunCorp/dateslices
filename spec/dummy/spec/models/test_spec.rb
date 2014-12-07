@@ -10,7 +10,7 @@ formats = ['groupdate', 'dateslice']
 
 databases.each do |database|
   formats.each do |format|
-    RSpec.describe "#{database[:adapter1].titleize} #{format}", :type => :model do
+    RSpec.describe "#{database[:adapter].titleize} #{format}", :type => :model do
       include_examples format, database
     end
   end
