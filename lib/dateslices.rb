@@ -5,9 +5,9 @@ module Dateslices
   FIELDS = [:second, :minute, :hour, :day, :week, :day_of_week, :month, :year ]
   METHODS = FIELDS.map{|v| :"group_by_#{v}" }
 
-  mattr_accessor :week_start, :day_start, :time_zone
-  self.week_start = :sun
-  self.day_start = 0
+  mattr_accessor :output_format
+
+  self.output_format = :groupdate
 end
 
 begin

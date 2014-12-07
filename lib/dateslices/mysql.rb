@@ -20,7 +20,7 @@ module Dateslices
         when :week # Sigh...
           "DATE_FORMAT( date_sub( created_at, interval ((weekday( created_at ) + 1)%7) day ), '%Y-%m-%d 00:00:00 UTC')"
         else
-          throw "Implement #{field}"
+          throw "Unknown time filter #{field}"
       end
     end
 

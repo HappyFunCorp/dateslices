@@ -3,41 +3,51 @@ module Dateslices
 
     Dateslices::FIELDS.each do |field|
       define_method :"group_by_#{field}" do |*args|
+
         args = args.dup
 
-        column = args[0]
-        column = 'created_at' if column.blank?
+        column = args[0].blank? ? 'created_at' : args[0]
 
-        aggregation = args[1]
-        aggregation = 'count' if aggregation.blank?
+        aggregation = args[1].blank? ? 'count' : args[1]
 
-        aggregation_column = args[2]
-        aggregation_column = "*" if aggregation_column.blank?
+        aggregation_column = args[2].blank? ? '*' : args[2]
 
-        sql = ["#{aggregation}(#{aggregation_column}) as cnt"]
+        sql = ["#{aggregation}(#{aggregation_column}) as count"]
 
-        time_filter = ''
-
-        case connection.adapter_name
-        when 'SQLite'
-          time_filter = Dateslices::Sqlite.time_filter(column, field)
-        when 'PostgreSQL', 'PostGIS'
-          time_filter = Dateslices::Postgresql.time_filter(column, field)
-        when 'MySQL', 'Mysql2'
-          time_filter = Dateslices::Mysql.time_filter(column, field)
-        else
-          throw "Unknown database adaptor #{connection.adapter_name}"
-        end
+        time_filter = case connection.adapter_name
+                        when 'SQLite'
+                          Dateslices::Sqlite.time_filter(column, field)
+                        when 'PostgreSQL', 'PostGIS'
+                          Dateslices::Postgresql.time_filter(column, field)
+                        when 'MySQL', 'Mysql2'
+                          Dateslices::Mysql.time_filter(column, field)
+                        else
+                          throw "Unknown database adaptor #{connection.adapter_name}"
+                      end
 
         sql << "#{time_filter} as date_slice"
 
-        select( sql.join(', ')).where.not(column => nil).group('date_slice').order('date_slice').collect do |c|
-          slice = c['date_slice']
-          slice = slice.to_i.to_s if slice.is_a? Float
-          slice = slice.to_s if slice.is_a? Integer
-          slice = slice.to_s
-          { date_slice: slice, aggregation.to_sym => c["cnt"] }
+        slices = select( sql.join(', ')).where.not(column => nil).group('date_slice').order('date_slice')
+
+        if Dateslices.output_format == :groupdate
+
+          slices.collect! do |c|
+            slice = c['date_slice']
+            slice = slice.is_a?(Float) ? slice.to_i.to_s : slice.to_s
+            [slice, c['count']]
+          end
+
+          Hash[slices]
+        else
+
+          slices.collect do |c|
+            slice = c['date_slice']
+            slice = slice.is_a?(Float) ? slice.to_i.to_s : slice.to_s
+            { date_slice: slice, aggregation.to_sym => c['count'] }
+          end
+
         end
+
       end
     end
 
