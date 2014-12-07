@@ -15,6 +15,11 @@ The differences between the groupdate and dateslices are:
 
 The reason that I wrote this is that I use sqlite in development, and wanted to make sure that I could test things locally.  I didn't understand the test suite of groupdate, so I ended up rewriting it.
 
+## Walkthrough
+
+A walk through of how this code is written is available on [my blog](http://willschenk.com/dateslice-writing-rails-extensions/)
+
+Usage instructions below.
 
 ## Example Usage
 
