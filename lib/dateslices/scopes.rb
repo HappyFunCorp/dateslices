@@ -30,25 +30,22 @@ module Dateslices
         slices = select( sql.join(', ')).where.not(column => nil).group('date_slice').order('date_slice')
 
         if Dateslices.output_format == :groupdate
-
           slices.collect! do |c|
-            slice = c['date_slice']
-            slice = slice.is_a?(Float) ? slice.to_i.to_s : slice.to_s
-            [slice, c['count']]
+            [slice(c), c['count']]
           end
 
           Hash[slices]
         else
-
           slices.collect do |c|
-            slice = c['date_slice']
-            slice = slice.is_a?(Float) ? slice.to_i.to_s : slice.to_s
-            { date_slice: slice, aggregation.to_sym => c['count'] }
+            { date_slice: slice(c), aggregation.to_sym => c['count'] }
           end
-
         end
+      end 
+    end
 
-      end
+    def slice(c)
+      slice = c['date_slice']
+      slice.is_a?(Float) ? slice.to_i.to_s : slice.to_s
     end
 
   end
