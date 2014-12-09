@@ -17,8 +17,14 @@ module Dateslices
           "strftime( \"%Y-%m-01 00:00:00 UTC\", #{column} )"
         when :year
           "strftime( \"%Y-01-01 00:00:00 UTC\", #{column} )"
+        when :hour_of_day
+          "strftime( \"%H\", #{column} )"
         when :day_of_week
           "strftime( \"%w\", #{column} )"
+        when :day_of_month
+          "strftime( \"%d\", #{column} )"
+        when :month_of_year
+          "strftime( \"%m\", #{column} )"
         else
           throw "Unknown time filter #{field}"
       end
