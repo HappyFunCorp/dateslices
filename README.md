@@ -17,7 +17,7 @@ The reason that I wrote this is that I use sqlite in development, and wanted to 
 
 ## Walkthrough
 
-A walk through of how this code is written is available on [my blog](http://willschenk.com/dateslice-writing-rails-extensions/)
+A walk through of how this code is written is available on [my blog](http://willschenk.com/dateslice-writing-rails-extensions)
 
 Usage instructions below.
 
