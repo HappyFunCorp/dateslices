@@ -5,7 +5,7 @@ This project rocks and uses MIT-LICENSE.
 This project is based upon [groupdate](https://github.com/ankane/groupdate) and follows a similar API.
 
 The differences between the groupdate and dateslices are:
-- dateslices supports sqlite3.
+- dateslices supports sqlite3in addition to PostgreSQL & MySQL.
 - dateslices has much less functionality.
 - dateslices ignores timezones.
 - dateslices is rails 4 only.
