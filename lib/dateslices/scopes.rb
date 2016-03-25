@@ -30,7 +30,7 @@ module Dateslices
         slices = select( sql.join(', ')).where.not(column => nil).group('date_slice').order('date_slice')
 
         if Dateslices.output_format == :groupdate
-          slices.collect! do |c|
+          slices = slices.collect do |c|
             [slice(c), c['count']]
           end
 

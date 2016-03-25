@@ -8,7 +8,7 @@ formats.each do |format|
 
   RSpec.shared_examples format do |config|
 
-    before :context do
+    before :suite do
       puts "Setting up #{config}"
       ActiveRecord::Base.establish_connection config
 
@@ -21,7 +21,7 @@ formats.each do |format|
       end
     end
 
-    before do
+    before :each do
       Dateslices.output_format = format.to_sym
       User.delete_all
     end
