@@ -24,7 +24,7 @@ module Dateslices
         when :year
           "DATE_FORMAT(#{column}, '%Y-01-01 00:00:00 UTC')"
         when :week # Sigh...
-          "DATE_FORMAT( date_sub( created_at, interval ((weekday( created_at ) + 1)%7) day ), '%Y-%m-%d 00:00:00 UTC')"
+          "DATE_FORMAT( date_sub( #{column}, interval ((weekday( #{column} ) + 1)%7) day ), '%Y-%m-%d 00:00:00 UTC')"
         else
           throw "Unknown time filter #{field}"
       end
