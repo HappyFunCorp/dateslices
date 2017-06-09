@@ -40,12 +40,19 @@ module Dateslices
             { date_slice: slice(c), aggregation.to_sym => c['count'] }
           end
         end
-      end 
+      end
     end
 
     def slice(c)
       slice = c['date_slice']
-      slice.is_a?(Float) ? slice.to_i.to_s : slice.to_s
+      if slice.is_a?(Float)
+        slice.to_i.to_s
+      elsif slice.to_s.match /^\d{4}\-\d{2}\-\d{2}/
+        date = Date.parse(slice.to_s)
+        I18n.l(date)
+      else
+        slice.to_s
+      end
     end
 
   end
